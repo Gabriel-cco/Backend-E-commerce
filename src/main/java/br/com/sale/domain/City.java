@@ -1,8 +1,6 @@
 package br.com.sale.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,10 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -32,11 +28,6 @@ public class City implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "idEstate")
 	private Estate estate;
-
-
-	@JsonManagedReference
-	@OneToMany(mappedBy = "city")
-	private List<Address> address = new ArrayList<>();
 
 	public City() {
 	}
@@ -72,14 +63,11 @@ public class City implements Serializable {
 		this.estate = estate;
 	}
 
-	public List<Address> getAddress() {
-		return address;
-	}
-
-	public void setAddress(List<Address> address) {
-		this.address = address;
-	}
-
+	/*
+	 * public List<Address> getAddress() { return address; }
+	 * 
+	 * public void setAddress(List<Address> address) { this.address = address; }
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;

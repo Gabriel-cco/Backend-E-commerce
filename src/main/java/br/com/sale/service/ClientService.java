@@ -26,8 +26,8 @@ public class ClientService {
 		return repo.findAll();
 	}
 
-	public void insert(Client category) {
-		repo.save(category);
+	public void insert(Client client) {
+		repo.save(client);
 	}
 
 	public void delete(Long id) {

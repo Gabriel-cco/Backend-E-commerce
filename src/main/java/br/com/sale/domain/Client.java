@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import br.com.sale.domain.enums.TypeClient;
 
 @Entity
@@ -31,12 +33,16 @@ public class Client implements Serializable {
 	private String cpfOrCnpj;
 	private Integer type;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "client")
 	private List<Address> address = new ArrayList<>();
-	
+
 	@ElementCollection
 	@CollectionTable(name = "tb_fone")
 	private Set<String> fones = new HashSet<>();
+
+	@OneToMany(mappedBy = "client")
+	private List<Pedido> pedidos = new ArrayList<>();
 
 	public Client() {
 	}
@@ -104,6 +110,14 @@ public class Client implements Serializable {
 
 	public void setFones(Set<String> fones) {
 		this.fones = fones;
+	}
+
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 
 	@Override
