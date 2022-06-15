@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import br.com.sale.domain.enums.EstatePayment;
 
 @Entity(name = "tb_payment_bank_slip")
@@ -13,9 +15,10 @@ public class PaymentBankSlip extends Payment {
 
 	private EstatePayment estatePayment;
 
-	// dataDeVencimento
+	@JsonFormat(pattern = "dd/MM/yyy HH:MM")
 	private Date dueDate;
 
+	@JsonFormat(pattern = "dd/MM/yyy HH:MM")
 	private Date paymentDate;
 
 	public PaymentBankSlip() {
