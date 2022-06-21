@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -27,16 +29,15 @@ public class CategoryResource {
 	private CategoryService catService;
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody Category entity) {
-		catService.insert(entity);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(entity.getId()).toUri();
+	public ResponseEntity<Void> insert(@Valid @RequestBody CategoryDTO entityDTO) {
+		catService.insert(CategoryDTO.fromDTO(entityDTO));
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(entityDTO.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody Category entity, @PathVariable Long id) {
-		entity.setId(id);
-		catService.update(entity);
+	public ResponseEntity<Void> update(@Valid @RequestBody CategoryDTO entityDTO, @PathVariable Long id) {
+		catService.update(CategoryDTO.fromDTO(entityDTO));
 		return ResponseEntity.noContent().build();
 	}
 	
