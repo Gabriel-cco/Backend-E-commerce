@@ -68,9 +68,17 @@ public class SaleApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		Category cat1 = new Category(null, "Electronics");
+		Category cat1 = new Category(null, "Informatica");
 		Category cat2 = new Category(null, "Escritório");
-
+		Category cat3 = new Category(null, "Cama mesa e banho");
+		Category cat4 = new Category(null, "Eletrônicos");
+		Category cat5 = new Category(null, "jardinagem");
+		Category cat6 = new Category(null, "Decoração");
+		Category cat7 = new Category(null, "Perfumaria");
+		Category cat8 = new Category(null, "Roupas");
+		Category cat9 = new Category(null, "Infantil");
+		Category cat10 = new Category(null, "Automotivos");
+		
 		Product prod1 = new Product(null, "Computador", new BigDecimal("2000.00"));
 		Product prod2 = new Product(null, "Impressora", new BigDecimal("800.00"));
 		Product prod3 = new Product(null, "Mouse", new BigDecimal("80.00"));
@@ -91,7 +99,7 @@ public class SaleApplication implements CommandLineRunner {
 
 		estateRepo.saveAll(Arrays.asList(est1, est2));
 		cityRepo.saveAll(Arrays.asList(city1, city2, city3));
-		categoryRepository.saveAll(Arrays.asList(cat1, cat2));
+		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7, cat8, cat9, cat10));
 		prodRepo.saveAll(Arrays.asList(prod1, prod2, prod3));
 
 		Client cli1 = new Client(null, "Gabriel Batista", "gabrielbatista78@hotmail.com", "36378912377",
