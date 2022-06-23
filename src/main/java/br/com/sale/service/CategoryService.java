@@ -27,8 +27,9 @@ public class CategoryService {
 	}
 
 	public Category update(Category category) {
-		findById(category.getId());
-		return repo.save(category);
+		Category newEntity = findById(category.getId());
+		updateData(newEntity, category);
+			 return repo.save(newEntity);
 	}
 
 	public void delete(Long id) {
@@ -53,5 +54,9 @@ public class CategoryService {
 	public Page<Category> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
+	}
+	
+	private void updateData(Category newObject, Category obj) {
+		newObject.setNome(obj.getNome());
 	}
 }

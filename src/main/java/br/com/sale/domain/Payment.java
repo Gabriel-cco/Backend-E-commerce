@@ -37,7 +37,7 @@ public abstract class Payment implements Serializable {
 	public Payment(Long id, EstatePayment estatePayment, Pedido pedido) {
 		super();
 		this.id = id;
-		this.estatePayment = estatePayment.getCode();
+		this.estatePayment = (estatePayment == null) ? null : estatePayment.getCode();
 		this.pedido = pedido;
 	}
 
