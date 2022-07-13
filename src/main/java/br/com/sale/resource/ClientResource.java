@@ -1,5 +1,6 @@
 package br.com.sale.resource;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.sale.domain.Client;
 import br.com.sale.dto.ClientDTO;
+import br.com.sale.dto.ClientNewDTO;
 import br.com.sale.service.ClientService;
 
 @RestController
@@ -26,6 +29,14 @@ public class ClientResource {
 	@Autowired
 	private ClientService catService;
 	
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClientNewDTO entityDTO) {
+		Client cli = ClientNewDTO.fromDTO(entityDTO);
+		cli = catService.insert(cli);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(cli.getId()).toUri();
+		return ResponseEntity.created(uri).build();
+	}
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody ClientDTO entityDTO, @PathVariable Long id) {
 		Client obj = ClientDTO.fromDTO(entityDTO);

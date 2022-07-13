@@ -42,14 +42,14 @@ public class CategoryResource {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Long id){
+	public ResponseEntity<Void> delete(@PathVariable Integer id){
 			catService.delete(id);
 		return ResponseEntity.noContent().build();
 		
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Category> findById(@PathVariable Long id) {
+	public ResponseEntity<Category> findById(@PathVariable Integer id) {
 		Category obj = catService.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}

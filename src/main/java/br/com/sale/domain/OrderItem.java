@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="tb_order_item")
+@Table(name = "tb_order_item")
 public class OrderItem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -18,11 +18,11 @@ public class OrderItem implements Serializable {
 	@JsonIgnore
 	@EmbeddedId
 	private OrderItemPK id = new OrderItemPK();
-	
+
 	private BigDecimal discount;
 	private Integer quantity;
 	private BigDecimal price;
-	
+
 	public OrderItem() {
 	}
 
@@ -34,12 +34,18 @@ public class OrderItem implements Serializable {
 		this.quantity = quantity;
 		this.price = price;
 	}
-	
+
+	public BigDecimal getSubtotal() {
+		BigDecimal temp = new BigDecimal(quantity);
+		BigDecimal result = price.subtract(discount).multiply(temp);
+		return result;
+	}
+
 	@JsonIgnore
 	public Pedido getPedido() {
 		return id.getPedido();
 	}
-	
+
 	public Product getProduct() {
 		return id.getProduct();
 	}
@@ -100,9 +106,5 @@ public class OrderItem implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-	
-	
 
 }

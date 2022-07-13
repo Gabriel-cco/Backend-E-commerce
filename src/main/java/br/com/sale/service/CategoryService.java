@@ -21,6 +21,7 @@ public class CategoryService {
 	@Autowired
 	private CategoryRepository repo;
 
+	
 	public void insert(Category category) {
 		category.setId(null);
 		repo.save(category);
@@ -32,7 +33,7 @@ public class CategoryService {
 			 return repo.save(newEntity);
 	}
 
-	public void delete(Long id) {
+	public void delete(Integer id) {
 		findById(id);
 		try {
 			repo.deleteById(id);
@@ -41,7 +42,7 @@ public class CategoryService {
 		}
 	}
 
-	public Category findById(Long id) {
+	public Category findById(Integer id) {
 		Optional<Category> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Category.class.getName()));

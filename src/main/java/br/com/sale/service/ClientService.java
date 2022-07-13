@@ -9,8 +9,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.sale.domain.Client;
+import br.com.sale.repositories.AddressRepository;
 import br.com.sale.repositories.ClientRepository;
 import br.com.sale.services.exception.DataIntegrityException;
 import br.com.sale.services.exception.ObjectNotFoundException;
@@ -20,13 +22,18 @@ public class ClientService {
 
 	@Autowired
 	private ClientRepository repo;
+	
+	@Autowired
+	private AddressRepository addRepo;
 
-
-	public void insert(Client client) {
+	@Transactional
+	public Client insert(Client client) {
 		client.setId(null);
-		repo.save(client);
+		client = repo.save(client);
+		addRepo.saveAll(client.getAddress());
+		return client;
 	}
-
+	
 	public Client update(Client client) {
 	Client newEntity = findById(client.getId());
 	updateData(newEntity, client);
@@ -38,7 +45,7 @@ public class ClientService {
 		try {
 			repo.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("A categoria possui produtos inseridos, não é possivel exclui-la");
+			throw new DataIntegrityException("O cliente possui pedidos relacionados, não é possivel exclui-lo");
 		}
 	}
 

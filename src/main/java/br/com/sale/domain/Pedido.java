@@ -1,6 +1,7 @@
 package br.com.sale.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -53,6 +54,14 @@ public class Pedido implements Serializable {
 		/* this.payment = payment; */
 		this.client = client;
 		this.deliveryAddress = deliveryAddress;
+	}
+
+	public BigDecimal getTotal() {
+		BigDecimal total = new BigDecimal(0.0);
+		for (OrderItem i : itens) {
+			total = total.add(i.getSubtotal());
+		}
+		return total;
 	}
 
 	public Long getId() {

@@ -1,36 +1,40 @@
 package br.com.sale.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
-import br.com.sale.domain.Category;
+import br.com.sale.domain.Product;
 
-public class CategoryDTO implements Serializable {
+public class ProductDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	private Integer id;
-	
+
+	private Long id;
+
 	@NotEmpty(message = "Campo obrigatório")
 	@Length(min = 5, max = 80, message = "Você deve preencher esse campo de 5 à 80 caracteres")
 	private String nome;
 
-	public CategoryDTO() {
-	}
-	
-	public CategoryDTO(Category entity) {
-		id = entity.getId();
-		nome = entity.getNome();
+	private BigDecimal preco;
+
+	public ProductDTO() {
 	}
 
-	public Integer getId() {
+	public ProductDTO(Product entity) {
+		id = entity.getId();
+		nome = entity.getNome();
+		preco = entity.getPreco();
+	}
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -41,10 +45,17 @@ public class CategoryDTO implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	public static Category fromDTO(CategoryDTO dto) {
-		return new Category(dto.id, dto.getNome());
+
+	public BigDecimal getPreco() {
+		return preco;
 	}
-	
-	
+
+	public void setPreco(BigDecimal preco) {
+		this.preco = preco;
+	}
+
+	public static Product fromDTO(ProductDTO dto) {
+		return new Product(dto.id, dto.getNome(), dto.getPreco());
+	}
+
 }

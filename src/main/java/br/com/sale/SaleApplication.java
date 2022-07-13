@@ -51,16 +51,16 @@ public class SaleApplication implements CommandLineRunner {
 
 	@Autowired
 	private AddressRepository adressRepo;
-	
+
 	@Autowired
 	PedidoRepository pedidoRepo;
 
 	@Autowired
 	PaymentRepository paymentRepo;
-	
+
 	@Autowired
 	OrderItemRepository OrderItemRepos;
-	
+
 	public static void main(String[] args) {
 		SpringApplication.run(SaleApplication.class, args);
 	}
@@ -78,17 +78,38 @@ public class SaleApplication implements CommandLineRunner {
 		Category cat8 = new Category(null, "Roupas");
 		Category cat9 = new Category(null, "Infantil");
 		Category cat10 = new Category(null, "Automotivos");
-		
+
 		Product prod1 = new Product(null, "Computador", new BigDecimal("2000.00"));
 		Product prod2 = new Product(null, "Impressora", new BigDecimal("800.00"));
 		Product prod3 = new Product(null, "Mouse", new BigDecimal("80.00"));
+		Product prod4 = new Product(null, "Mesa de Escritório", new BigDecimal("300.00"));
+		Product prod5 = new Product(null, "Toalha", new BigDecimal("50.00"));
+		Product prod6 = new Product(null, "Colcha", new BigDecimal("200.00"));
+		Product prod7 = new Product(null, "TV true color", new BigDecimal("1200.00"));
+		Product prod8 = new Product(null, "Roçadeira", new BigDecimal("800.00"));
+		Product prod9 = new Product(null, "Abajur", new BigDecimal("100.00"));
+		Product prod10 = new Product(null, "Pendente", new BigDecimal("180.00"));
+		Product prod11 = new Product(null, "Shampoo", new BigDecimal("90.00"));
 
 		cat1.getProduct().addAll(Arrays.asList(prod1, prod2, prod3));
-		cat2.getProduct().addAll(Arrays.asList(prod2));
+		cat2.getProduct().addAll(Arrays.asList(prod2, prod4));
+		cat3.getProduct().addAll(Arrays.asList(prod5, prod6));
+		cat4.getProduct().addAll(Arrays.asList(prod1, prod2, prod3, prod7));
+		cat5.getProduct().addAll(Arrays.asList(prod8));
+		cat6.getProduct().addAll(Arrays.asList(prod9, prod10));
+		cat7.getProduct().addAll(Arrays.asList(prod11));
 
-		prod1.getCategorys().addAll(Arrays.asList(cat1));
-		prod2.getCategorys().addAll(Arrays.asList(cat1, cat2));
-		prod3.getCategorys().addAll(Arrays.asList(cat1));
+		prod1.getCategorys().addAll(Arrays.asList(cat1, cat4));
+		prod2.getCategorys().addAll(Arrays.asList(cat1, cat2, cat4));
+		prod3.getCategorys().addAll(Arrays.asList(cat1, cat4));
+		prod4.getCategorys().addAll(Arrays.asList(cat2));
+		prod5.getCategorys().addAll(Arrays.asList(cat3));
+		prod6.getCategorys().addAll(Arrays.asList(cat3));
+		prod7.getCategorys().addAll(Arrays.asList(cat4));
+		prod8.getCategorys().addAll(Arrays.asList(cat5));
+		prod9.getCategorys().addAll(Arrays.asList(cat6));
+		prod10.getCategorys().addAll(Arrays.asList(cat6));
+		prod11.getCategorys().addAll(Arrays.asList(cat7));
 
 		Estate est1 = new Estate(null, "Minas Gerais");
 		Estate est2 = new Estate(null, "São Paulo");
@@ -100,7 +121,7 @@ public class SaleApplication implements CommandLineRunner {
 		estateRepo.saveAll(Arrays.asList(est1, est2));
 		cityRepo.saveAll(Arrays.asList(city1, city2, city3));
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7, cat8, cat9, cat10));
-		prodRepo.saveAll(Arrays.asList(prod1, prod2, prod3));
+		prodRepo.saveAll(Arrays.asList(prod1, prod2, prod3, prod4, prod5, prod6, prod7, prod8, prod9, prod10, prod11));
 
 		Client cli1 = new Client(null, "Gabriel Batista", "gabrielbatista78@hotmail.com", "36378912377",
 				TypeClient.PESSOAFISICA);
@@ -121,26 +142,26 @@ public class SaleApplication implements CommandLineRunner {
 
 		Payment pay1 = new CardPayment(null, EstatePayment.QUITADO, ped1, 6);
 		ped1.setPayment(pay1);
-		
+
 		Payment pay2 = new PaymentBankSlip(null, EstatePayment.PENDENTE, ped2, sdf.parse("15/06/2022 00:00"), null);
 		ped2.setPayment(pay2);
 
 		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
-		
+
 		pedidoRepo.saveAll(Arrays.asList(ped1, ped2));
 		paymentRepo.saveAll(Arrays.asList(pay1, pay2));
-		
+
 		OrderItem order1 = new OrderItem(ped1, prod1, new BigDecimal("0.00"), 1, new BigDecimal("2000.00"));
 		OrderItem order2 = new OrderItem(ped1, prod3, new BigDecimal("0.00"), 2, new BigDecimal("80.00"));
 		OrderItem order3 = new OrderItem(ped2, prod2, new BigDecimal("100.00"), 1, new BigDecimal("800.00"));
-		
+
 		ped1.getItens().addAll(Arrays.asList(order1, order2));
 		ped2.getItens().addAll(Arrays.asList(order3));
-		
+
 		prod1.getItens().addAll(Arrays.asList(order1));
 		prod2.getItens().addAll(Arrays.asList(order3));
 		prod3.getItens().addAll(Arrays.asList(order2));
-		
+
 		OrderItemRepos.saveAll(Arrays.asList(order1, order2, order3));
 	}
 
