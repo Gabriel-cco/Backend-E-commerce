@@ -38,7 +38,6 @@ public class Client implements Serializable {
 	private String cpfOrCnpj;
 	private Integer type;
 
-	@JsonManagedReference
 	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
 	private List<Address> address = new ArrayList<>();
 

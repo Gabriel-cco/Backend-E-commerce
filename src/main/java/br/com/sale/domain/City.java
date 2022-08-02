@@ -10,8 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Entity
 @Table(name = "tb_city")
 public class City implements Serializable {
@@ -24,9 +22,8 @@ public class City implements Serializable {
 
 	private String nome;
 
-	@JsonManagedReference
 	@ManyToOne
-	@JoinColumn(name = "idEstate")
+	@JoinColumn(name = "estate_id")
 	private Estate estate;
 
 	public City() {
@@ -63,11 +60,6 @@ public class City implements Serializable {
 		this.estate = estate;
 	}
 
-	/*
-	 * public List<Address> getAddress() { return address; }
-	 * 
-	 * public void setAddress(List<Address> address) { this.address = address; }
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -8,4 +8,8 @@ import br.com.sale.domain.Pedido;
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
+	/*
+	 * @Transactional(readOnly=true) Page<Pedido> findByCliente(Client client,
+	 * Pageable pageRequest);
+	 */
 }

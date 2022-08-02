@@ -5,10 +5,12 @@ import java.util.Date;
 import javax.persistence.Entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import br.com.sale.domain.enums.EstatePayment;
 
 @Entity(name = "tb_payment_bank_slip")
+@JsonTypeName("pagamentoComBoleto")
 public class PaymentBankSlip extends Payment {
 
 	private static final long serialVersionUID = 1L;
