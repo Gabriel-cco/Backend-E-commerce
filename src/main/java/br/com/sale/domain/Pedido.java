@@ -2,8 +2,11 @@ package br.com.sale.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -136,5 +139,29 @@ public class Pedido implements Serializable {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		StringBuilder builder = new StringBuilder();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		builder.append("Pedido número: ");
+		builder.append(getId());
+		builder.append(", Instante: ");
+		builder.append(sdf.format(getInstant()));
+		builder.append(", Cliente: ");
+		builder.append(getClient().getName());
+		builder.append(", Status do Pedido: ");
+		builder.append(getPayment().getEstatePayment().getDescricao());
+		builder.append("\nDetalhes do Pedido:\n");
+		for(OrderItem oi : getItens()) {
+			builder.append(oi.toString());
+		}
+		builder.append("Valor total: ");
+		builder.append(nf.format(getTotal()));
+		return builder.toString();
+	}
+	
+	
 
 }
