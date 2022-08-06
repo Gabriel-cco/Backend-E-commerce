@@ -37,6 +37,10 @@ public class PedidoService {
 	@Autowired
 	private ClientService clientService;
 	
+	@Autowired
+	private EmailService emailService;
+	
+	
 	
 
 	public Pedido findById(Long id) {
@@ -70,7 +74,7 @@ public class PedidoService {
 
 		}
 		orderItemRepo.saveAll(pedido.getItens());
-		System.out.println(pedido);
+		emailService.sendOrderConfimationEmail(pedido);
 		return pedido;
 	}
 
