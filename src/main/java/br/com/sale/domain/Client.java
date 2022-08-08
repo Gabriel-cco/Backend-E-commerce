@@ -18,7 +18,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import br.com.sale.domain.enums.TypeClient;
 
@@ -38,6 +37,9 @@ public class Client implements Serializable {
 	private String cpfOrCnpj;
 	private Integer type;
 
+	@JsonIgnore
+	private String senha;
+
 	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
 	private List<Address> address = new ArrayList<>();
 
@@ -52,13 +54,14 @@ public class Client implements Serializable {
 	public Client() {
 	}
 
-	public Client(Long id, String name, String email, String cpfOrCnpj, TypeClient type) {
+	public Client(Long id, String name, String email, String cpfOrCnpj, TypeClient type, String senha) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.cpfOrCnpj = cpfOrCnpj;
 		this.type = (type == null) ? null : type.getCode();
+		this.senha = senha;
 	}
 
 	public Long getId() {
@@ -99,6 +102,14 @@ public class Client implements Serializable {
 
 	public void setType(TypeClient type) {
 		this.type = type.getCode();
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	public List<Address> getAddress() {

@@ -27,12 +27,13 @@ import br.com.sale.service.ClientService;
 public class ClientResource {
 
 	@Autowired
-	private ClientService catService;
+	private ClientService cliService;
+	
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody ClientNewDTO entityDTO) {
-		Client cli = ClientNewDTO.fromDTO(entityDTO);
-		cli = catService.insert(cli);
+		Client cli = cliService.fromDTO(entityDTO);
+		cli = cliService.insert(cli);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(cli.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
@@ -41,26 +42,26 @@ public class ClientResource {
 	public ResponseEntity<Void> update(@Valid @RequestBody ClientDTO entityDTO, @PathVariable Long id) {
 		Client obj = ClientDTO.fromDTO(entityDTO);
 		obj.setId(id);
-		obj = catService.update(obj);
+		obj = cliService.update(obj);
 		return ResponseEntity.noContent().build();
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Long id){
-			catService.delete(id);
+		cliService.delete(id);
 		return ResponseEntity.noContent().build();
 		
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Client> findById(@PathVariable Long id) {
-		Client obj = catService.findById(id);
+		Client obj = cliService.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<ClientDTO>> findAll() {
-		List<Client> list = catService.findAll();
+		List<Client> list = cliService.findAll();
 		List<ClientDTO> listDTO = list.stream().map(obj -> new ClientDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
@@ -71,7 +72,7 @@ public class ClientResource {
 			@RequestParam(value = "linesPerPage", defaultValue = "24")Integer linesPerPage, 
 			@RequestParam(value = "orderBy", defaultValue = "nome")String orderBy, 
 			@RequestParam(value = "direction", defaultValue = "ASC")String direction) {
-		Page<Client> list = catService.findPage(page, linesPerPage, orderBy, direction);
+		Page<Client> list = cliService.findPage(page, linesPerPage, orderBy, direction);
 		Page<ClientDTO> listDTO = list.map(obj -> new ClientDTO(obj));
 		return ResponseEntity.ok().body(listDTO);
 	}

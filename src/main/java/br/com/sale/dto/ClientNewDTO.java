@@ -7,10 +7,6 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
-import br.com.sale.domain.Address;
-import br.com.sale.domain.City;
-import br.com.sale.domain.Client;
-import br.com.sale.domain.enums.TypeClient;
 import br.com.sale.service.validation.ClientInsert;
 
 @ClientInsert
@@ -31,6 +27,9 @@ public class ClientNewDTO implements Serializable {
 	@NotEmpty(message = "Preenchimento obrigatório")
 	private String cpfOuCnpj;
 	private Integer tipo;
+
+	@NotEmpty
+	private String senha;
 
 	// address
 
@@ -81,6 +80,14 @@ public class ClientNewDTO implements Serializable {
 
 	public void setTipo(Integer tipo) {
 		this.tipo = tipo;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	public String getLogradouro() {
@@ -158,20 +165,4 @@ public class ClientNewDTO implements Serializable {
 	public ClientNewDTO() {
 	}
 
-	public static Client fromDTO(ClientNewDTO objDto) {
-		Client cli = new Client(null, objDto.getNome(), objDto.getEmail(), objDto.getCpfOuCnpj(),
-				TypeClient.valueOf(objDto.getTipo()));
-		City cid = new City(objDto.getCidadeId(), null, null);
-		Address end = new Address(null, objDto.getLogradouro(), objDto.getNumero(), objDto.getComplemento(),
-				objDto.getBairro(), objDto.getCep(), cli, cid);
-		cli.getAddress().add(end);
-		cli.getFones().add(objDto.getTelefone1());
-		if (objDto.getTelefone2() != null) {
-			cli.getFones().add(objDto.getTelefone2());
-		}
-		if (objDto.getTelefone3() != null) {
-			cli.getFones().add(objDto.getTelefone3());
-		}
-		return cli;
-	}
 }

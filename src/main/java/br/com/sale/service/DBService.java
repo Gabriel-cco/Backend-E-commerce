@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.sale.domain.Address;
@@ -51,6 +52,9 @@ public class DBService {
 
 	@Autowired
 	private AddressRepository adressRepo;
+	
+	@Autowired
+	private BCryptPasswordEncoder pe;
 
 	@Autowired
 	PedidoRepository pedidoRepo;
@@ -117,8 +121,8 @@ public class DBService {
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7, cat8, cat9, cat10));
 		prodRepo.saveAll(Arrays.asList(prod1, prod2, prod3, prod4, prod5, prod6, prod7, prod8, prod9, prod10, prod11));
 
-		Client cli1 = new Client(null, "Gabriel Batista", "gabrielbatista78@hotmail.com", "36378912377",
-				TypeClient.PESSOAFISICA);
+		Client cli1 = new Client(null, "Gabriel Batista", "gabrielbatista1551@gmail.com", "36378912377",
+				TypeClient.PESSOAFISICA, pe.encode("123"));
 		cli1.getFones().addAll(Arrays.asList("99999999", "88888888"));
 
 		Address adress1 = new Address(null, "Rua Flores", "300", "Apto", "Jardim", "28220834", cli1, city3);

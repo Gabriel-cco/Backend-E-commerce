@@ -59,7 +59,7 @@ public class ClientDTO implements Serializable {
 	}
 
 	public static Client fromDTO(ClientDTO dto) {
-		return new Client(dto.getId(), dto.getNome(), dto.getEmail(), null, null);
+		return new Client(dto.getId(), dto.getNome(), dto.getEmail(), null, null, null);
 	}
 	
 	
