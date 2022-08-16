@@ -23,12 +23,6 @@ public class ProductResource {
 	@Autowired
 	private ProductService prodService;
 
-	/*
-	 * @RequestMapping(method = RequestMethod.GET) public
-	 * ResponseEntity<List<Product>> findAll() { List<Product> list =
-	 * prodService.findAll(); return ResponseEntity.ok().body(list); }
-	 */
-
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Product> findById(@PathVariable Long id) {
 		Product obj = prodService.findById(id);

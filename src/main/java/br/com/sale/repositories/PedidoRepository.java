@@ -6,10 +6,10 @@ import org.springframework.stereotype.Repository;
 import br.com.sale.domain.Pedido;
 
 @Repository
-public interface PedidoRepository extends JpaRepository<Pedido, Long> {
+public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
 
 	/*
-	 * @Transactional(readOnly=true) Page<Pedido> findByCliente(Client client,
+	 * @Transactional(readOnly = true) Page<Pedido> findByCliente(Client client,
 	 * Pageable pageRequest);
 	 */
 }

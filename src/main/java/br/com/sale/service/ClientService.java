@@ -15,10 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.sale.domain.Address;
 import br.com.sale.domain.City;
 import br.com.sale.domain.Client;
+import br.com.sale.domain.enums.Perfil;
 import br.com.sale.domain.enums.TypeClient;
 import br.com.sale.dto.ClientNewDTO;
 import br.com.sale.repositories.AddressRepository;
 import br.com.sale.repositories.ClientRepository;
+import br.com.sale.security.UserSS;
+import br.com.sale.services.exception.AuthorizationException;
 import br.com.sale.services.exception.DataIntegrityException;
 import br.com.sale.services.exception.ObjectNotFoundException;
 
@@ -58,6 +61,10 @@ public class ClientService {
 	}
 
 	public Client findById(Long id) {
+		UserSS user = UserService.authenticated();
+		if(user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
 		Optional<Client> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Client.class.getName()));
@@ -78,7 +85,7 @@ public class ClientService {
 	}
 	
 
-	public static Client fromDTO(ClientNewDTO objDto) {
+	public Client fromDTO(ClientNewDTO objDto) {
 		Client cli = new Client(null, objDto.getNome(), objDto.getEmail(), objDto.getCpfOuCnpj(),
 				TypeClient.valueOf(objDto.getTipo()), pe.encode(objDto.getSenha()));
 		City cid = new City(objDto.getCidadeId(), null, null);

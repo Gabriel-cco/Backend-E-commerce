@@ -23,7 +23,7 @@ public abstract class Payment implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private Long id;
+	private Integer id;
 
 	private Integer estatePayment;
 
@@ -36,18 +36,18 @@ public abstract class Payment implements Serializable {
 	public Payment() {
 	}
 
-	public Payment(Long id, EstatePayment estatePayment, Pedido pedido) {
+	public Payment(Integer id, EstatePayment estatePayment, Pedido pedido) {
 		super();
 		this.id = id;
 		this.estatePayment = (estatePayment == null) ? null : estatePayment.getCode();
 		this.pedido = pedido;
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

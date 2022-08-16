@@ -26,7 +26,7 @@ public class PaymentBankSlip extends Payment {
 	public PaymentBankSlip() {
 	}
 
-	public PaymentBankSlip(Long id, EstatePayment estatePayment, Pedido pedido, Date dueDate, Date paymentDate) {
+	public PaymentBankSlip(Integer id, EstatePayment estatePayment, Pedido pedido, Date dueDate, Date paymentDate) {
 		super(id, estatePayment, pedido);
 		this.dueDate = dueDate;
 		this.paymentDate = paymentDate;

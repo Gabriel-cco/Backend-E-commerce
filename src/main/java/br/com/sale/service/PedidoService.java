@@ -7,9 +7,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.sale.domain.Client;
 import br.com.sale.domain.OrderItem;
 import br.com.sale.domain.PaymentBankSlip;
 import br.com.sale.domain.Pedido;
@@ -17,6 +21,8 @@ import br.com.sale.domain.enums.EstatePayment;
 import br.com.sale.repositories.OrderItemRepository;
 import br.com.sale.repositories.PaymentRepository;
 import br.com.sale.repositories.PedidoRepository;
+import br.com.sale.security.UserSS;
+import br.com.sale.services.exception.AuthorizationException;
 import br.com.sale.services.exception.ObjectNotFoundException;
 
 @Service
@@ -37,7 +43,7 @@ public class PedidoService {
 	@Autowired
 	private ClientService clientService;
 
-	public Pedido findById(Long id) {
+	public Pedido findById(Integer id) {
 		Optional<Pedido> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado!	 Id: " + id + ", Tipo: " + Pedido.class.getName()));
@@ -71,8 +77,17 @@ public class PedidoService {
 		return pedido;
 	}
 
-	public void delete(Long id) {
+	public void delete(Integer id) {
 		repo.deleteById(id);
+	}
+
+	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		UserSS user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return repo.findAll(pageRequest);
 	}
 
 	private PaymentBankSlip preenchimentoBoleto(PaymentBankSlip bankSlip, Date intantPayment) {

@@ -19,7 +19,7 @@ public class CardPayment extends Payment {
 	public CardPayment() {
 	}
 
-	public CardPayment(Long id, EstatePayment estatePayment, Pedido pedido, Integer numberInstallments) {
+	public CardPayment(Integer id, EstatePayment estatePayment, Pedido pedido, Integer numberInstallments) {
 		super(id, estatePayment, pedido);
 		this.numberInstallments = numberInstallments;
 	}
