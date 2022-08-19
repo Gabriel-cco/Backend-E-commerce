@@ -1,9 +1,12 @@
 package br.com.sale.service;
 
+import java.awt.image.BufferedImage;
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,6 +14,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.com.sale.domain.Address;
 import br.com.sale.domain.City;
@@ -30,13 +34,25 @@ public class ClientService {
 
 	@Autowired
 	private ClientRepository repo;
-	
+
 	@Autowired
 	private AddressRepository addRepo;
-	
+
 	@Autowired
 	private static BCryptPasswordEncoder pe;
 
+	@Autowired
+	private S3Service s3Service;
+	
+	@Autowired
+	private ImageService imageService;
+	
+	@Value("${img.prefix.client.profile}")
+	private String prefix;
+	
+	@Value("${img.profile.size}")
+	private Integer size;
+	
 	@Transactional
 	public Client insert(Client client) {
 		client.setId(null);
@@ -44,14 +60,14 @@ public class ClientService {
 		addRepo.saveAll(client.getAddress());
 		return client;
 	}
-	
+
 	public Client update(Client client) {
-	Client newEntity = findById(client.getId());
-	updateData(newEntity, client);
-		 return repo.save(newEntity);
+		Client newEntity = findById(client.getId());
+		updateData(newEntity, client);
+		return repo.save(newEntity);
 	}
 
-	public void delete(Long id) {
+	public void delete(Integer id) {
 		findById(id);
 		try {
 			repo.deleteById(id);
@@ -60,9 +76,9 @@ public class ClientService {
 		}
 	}
 
-	public Client findById(Long id) {
+	public Client findById(Integer id) {
 		UserSS user = UserService.authenticated();
-		if(user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
 			throw new AuthorizationException("Acesso negado");
 		}
 		Optional<Client> obj = repo.findById(id);
@@ -78,12 +94,26 @@ public class ClientService {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
 	}
-	
+
+	public URI uploadProfilePicture(MultipartFile multipartFile) {
+		UserSS user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
+		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+		jpgImage = imageService.cropSquare(jpgImage);
+		jpgImage = imageService.resize(jpgImage, size);
+		
+		String fileName = prefix + user.getId() + ".jpg";
+		
+		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
+	}
+
 	private void updateData(Client newObject, Client obj) {
 		newObject.setEmail(obj.getEmail());
 		newObject.setName(obj.getName());
 	}
-	
 
 	public Client fromDTO(ClientNewDTO objDto) {
 		Client cli = new Client(null, objDto.getNome(), objDto.getEmail(), objDto.getCpfOuCnpj(),

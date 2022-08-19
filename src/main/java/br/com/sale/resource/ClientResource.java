@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.sale.domain.Client;
@@ -41,7 +42,7 @@ public class ClientResource {
 
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@Valid @RequestBody ClientDTO entityDTO, @PathVariable Long id) {
+	public ResponseEntity<Void> update(@Valid @RequestBody ClientDTO entityDTO, @PathVariable Integer id) {
 		Client obj = ClientDTO.fromDTO(entityDTO);
 		obj.setId(id);
 		obj = cliService.update(obj);
@@ -50,14 +51,14 @@ public class ClientResource {
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Long id){
+	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		cliService.delete(id);
 		return ResponseEntity.noContent().build();
 		
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Client> findById(@PathVariable Long id) {
+	public ResponseEntity<Client> findById(@PathVariable Integer id) {
 		Client obj = cliService.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
@@ -68,6 +69,12 @@ public class ClientResource {
 		List<Client> list = cliService.findAll();
 		List<ClientDTO> listDTO = list.stream().map(obj -> new ClientDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
+	}
+	
+	@RequestMapping(value = "/picture", method = RequestMethod.POST)
+	public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name = "file") MultipartFile file) {
+		URI uri = cliService.uploadProfilePicture(file);
+		return ResponseEntity.created(uri).build();
 	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")

@@ -50,11 +50,10 @@ public class Pedido implements Serializable {
 	public Pedido() {
 	}
 
-	public Pedido(Integer id, Date instant, /* Payment payment, */ Client client, Address deliveryAddress) {
+	public Pedido(Integer id, Date instant, Client client, Address deliveryAddress) {
 		super();
 		this.id = id;
 		this.instant = instant;
-		/* this.payment = payment; */
 		this.client = client;
 		this.deliveryAddress = deliveryAddress;
 	}

@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.sale.domain.Client;
 
 @Repository
-public interface ClientRepository extends JpaRepository<Client, Long> {
+public interface ClientRepository extends JpaRepository<Client, Integer> {
 
 	@Transactional(readOnly = true)
 	Client findByEmail(String email);

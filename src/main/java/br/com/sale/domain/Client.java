@@ -32,7 +32,7 @@ public class Client implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Integer id;
 	private String name;
 
 	@Column(unique = true)
@@ -57,12 +57,12 @@ public class Client implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "client")
 	private List<Pedido> pedidos = new ArrayList<>();
-
+	
 	public Client() {
 		addPerfil(Perfil.CLIENTE);
 	}
 
-	public Client(Long id, String name, String email, String cpfOrCnpj, TypeClient type, String senha) {
+	public Client(Integer id, String name, String email, String cpfOrCnpj, TypeClient type, String senha) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -73,11 +73,11 @@ public class Client implements Serializable {
 		addPerfil(Perfil.CLIENTE);
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

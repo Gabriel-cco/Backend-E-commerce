@@ -1,3 +1,4 @@
+
 package br.com.sale.service;
 
 import java.math.BigDecimal;
@@ -53,7 +54,7 @@ public class DBService {
 
 	@Autowired
 	private AddressRepository adressRepo;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder pe;
 
@@ -74,7 +75,7 @@ public class DBService {
 		Category cat5 = new Category(null, "Jardinagem");
 		Category cat6 = new Category(null, "Decoração");
 		Category cat7 = new Category(null, "Perfumaria");
-		
+
 		Product p1 = new Product(null, "Computador", BigDecimal.valueOf(2000.00));
 		Product p2 = new Product(null, "Impressora", BigDecimal.valueOf(800.00));
 		Product p3 = new Product(null, "Mouse", BigDecimal.valueOf(80.00));
@@ -86,12 +87,12 @@ public class DBService {
 		Product p9 = new Product(null, "Abajour", BigDecimal.valueOf(100.00));
 		Product p10 = new Product(null, "Pendente", BigDecimal.valueOf(180.00));
 		Product p11 = new Product(null, "Shampoo", BigDecimal.valueOf(90.00));
-		
+
 		Product p12 = new Product(null, "Product 12", BigDecimal.valueOf(10.00));
 		Product p13 = new Product(null, "Product 13", BigDecimal.valueOf(10.00));
 		Product p14 = new Product(null, "Product 14", BigDecimal.valueOf(10.00));
-		Product p15 = new Product(null, "Product 15",BigDecimal.valueOf(10.00));
-		Product p16 = new Product(null, "Product 16",BigDecimal.valueOf(10.00));
+		Product p15 = new Product(null, "Product 15", BigDecimal.valueOf(10.00));
+		Product p16 = new Product(null, "Product 16", BigDecimal.valueOf(10.00));
 		Product p17 = new Product(null, "Product 17", BigDecimal.valueOf(10.00));
 		Product p18 = new Product(null, "Product 18", BigDecimal.valueOf(10.00));
 		Product p19 = new Product(null, "Product 19", BigDecimal.valueOf(10.00));
@@ -126,11 +127,12 @@ public class DBService {
 		Product p48 = new Product(null, "Product 48", BigDecimal.valueOf(10.00));
 		Product p49 = new Product(null, "Product 49", BigDecimal.valueOf(10.00));
 		Product p50 = new Product(null, "Product 50", BigDecimal.valueOf(10.00));
-		
-		cat1.getProduct().addAll(Arrays.asList(p12, p13, p14, p15, p16, p17, p18, p19, p20,
-		p21, p22, p23, p24, p25, p26, p27, p28, p29, p30, p31, p32, p34, p35, p36, p37, p38,
-		p39, p40, p41, p42, p43, p44, p45, p46, p47, p48, p49, p50));
-		
+
+		cat1.getProduct()
+				.addAll(Arrays.asList(p12, p13, p14, p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26, p27,
+						p28, p29, p30, p31, p32, p34, p35, p36, p37, p38, p39, p40, p41, p42, p43, p44, p45, p46, p47,
+						p48, p49, p50));
+
 		p12.getCategorys().add(cat1);
 		p13.getCategorys().add(cat1);
 		p14.getCategorys().add(cat1);
@@ -169,8 +171,8 @@ public class DBService {
 		p47.getCategorys().add(cat1);
 		p48.getCategorys().add(cat1);
 		p49.getCategorys().add(cat1);
-		p50.getCategorys().add(cat1);	
-		
+		p50.getCategorys().add(cat1);
+
 		cat1.getProduct().addAll(Arrays.asList(p1, p2, p3));
 		cat2.getProduct().addAll(Arrays.asList(p2, p4));
 		cat3.getProduct().addAll(Arrays.asList(p5, p6));
@@ -178,7 +180,7 @@ public class DBService {
 		cat5.getProduct().addAll(Arrays.asList(p8));
 		cat6.getProduct().addAll(Arrays.asList(p9, p10));
 		cat7.getProduct().addAll(Arrays.asList(p11));
-		
+
 		p1.getCategorys().addAll(Arrays.asList(cat1, cat4));
 		p2.getCategorys().addAll(Arrays.asList(cat1, cat2, cat4));
 		p3.getCategorys().addAll(Arrays.asList(cat1, cat4));
@@ -190,73 +192,75 @@ public class DBService {
 		p9.getCategorys().addAll(Arrays.asList(cat6));
 		p10.getCategorys().addAll(Arrays.asList(cat6));
 		p11.getCategorys().addAll(Arrays.asList(cat7));
-				
+
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
 		prodRepo.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11));
 
-		prodRepo.saveAll(Arrays.asList(p12, p13, p14, p15, p16, p17, p18, p19, p20,
-				p21, p22, p23, p24, p25, p26, p27, p28, p29, p30, p31, p32, p33, p34, p35, p36, p37, p38,
-				p39, p40, p41, p42, p43, p44, p45, p46, p47, p48, p49, p50));
-		
+		prodRepo.saveAll(Arrays.asList(p12, p13, p14, p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26, p27,
+				p28, p29, p30, p31, p32, p33, p34, p35, p36, p37, p38, p39, p40, p41, p42, p43, p44, p45, p46, p47, p48,
+				p49, p50));
+
 		Estate est1 = new Estate(null, "Minas Gerais");
 		Estate est2 = new Estate(null, "São Paulo");
-		
+
 		City c1 = new City(null, "Uberlândia", est1);
 		City c2 = new City(null, "São Paulo", est2);
 		City c3 = new City(null, "Campinas", est2);
-		
+
 		est1.getCity().addAll(Arrays.asList(c1));
 		est2.getCity().addAll(Arrays.asList(c2, c3));
 
 		estateRepo.saveAll(Arrays.asList(est1, est2));
 		cityRepo.saveAll(Arrays.asList(c1, c2, c3));
-		
-		Client cli1 = new Client(null, "Gabriel Batista da Silva", "gabrielbatista1551@gmail.com", "36378912377", TypeClient.PESSOAFISICA, pe.encode("123"));
-		
+
+		Client cli1 = new Client(null, "Gabriel Batista da Silva", "gabrielbatista1551@gmail.com", "36378912377",
+				TypeClient.PESSOAFISICA, pe.encode("123"));
+
 		cli1.getFones().addAll(Arrays.asList("27363323", "93838393"));
-		
-		Client cli2 = new Client(null, "Batista Gabriel", "gabrielbatista78@hotmail.com", "31628382740", TypeClient.PESSOAFISICA, pe.encode("123"));
+
+		Client cli2 = new Client(null, "Batista Gabriel", "gabrielbatista78@hotmail.com", "31628382740",
+				TypeClient.PESSOAFISICA, pe.encode("123"));
 		cli2.getFones().addAll(Arrays.asList("93883321", "34252625"));
 		cli2.addPerfil(Perfil.ADMIN);
-		
+
 		Address e1 = new Address(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220834", cli1, c1);
 		Address e2 = new Address(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cli1, c2);
 		Address e3 = new Address(null, "Avenida Floriano", "2106", null, "Centro", "281777012", cli2, c2);
-		
+
 		cli1.getAddress().addAll(Arrays.asList(e1, e2));
 		cli2.getAddress().addAll(Arrays.asList(e3));
-		
+
 		clientRepo.saveAll(Arrays.asList(cli1, cli2));
 		adressRepo.saveAll(Arrays.asList(e1, e2, e3));
-		
+
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-		
+
 		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
 		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, e2);
-		
+
 		Payment pagto1 = new CardPayment(null, EstatePayment.QUITADO, ped1, 6);
 		ped1.setPayment(pagto1);
-		
+
 		Payment pagto2 = new PaymentBankSlip(null, EstatePayment.PENDENTE, ped2, sdf.parse("20/10/2017 00:00"), null);
 		ped2.setPayment(pagto2);
-		
+
 		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
-		
+
 		pedidoRepo.saveAll(Arrays.asList(ped1, ped2));
 		paymentRepo.saveAll(Arrays.asList(pagto1, pagto2));
-		
+
 		OrderItem ip1 = new OrderItem(ped1, p1, BigDecimal.valueOf(0.00), 1, BigDecimal.valueOf(2000.00));
 		OrderItem ip2 = new OrderItem(ped1, p3, BigDecimal.valueOf(0.00), 2, BigDecimal.valueOf(80.00));
 		OrderItem ip3 = new OrderItem(ped2, p2, BigDecimal.valueOf(100.00), 1, BigDecimal.valueOf(800.00));
-		
+
 		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
 		ped2.getItens().addAll(Arrays.asList(ip3));
-		
+
 		p1.getItens().addAll(Arrays.asList(ip1));
 		p2.getItens().addAll(Arrays.asList(ip3));
 		p3.getItens().addAll(Arrays.asList(ip2));
-		
-		orderItemRepo.saveAll(Arrays.asList(ip1, ip2, ip3));		
+
+		orderItemRepo.saveAll(Arrays.asList(ip1, ip2, ip3));
 	}
 
 }

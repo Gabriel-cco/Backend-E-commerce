@@ -87,7 +87,8 @@ public class PedidoService {
 			throw new AuthorizationException("Acesso negado");
 		}
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		return repo.findAll(pageRequest);
+		Client client = clientService.findById(user.getId());
+		return repo.findByClient(client, pageRequest);
 	}
 
 	private PaymentBankSlip preenchimentoBoleto(PaymentBankSlip bankSlip, Date intantPayment) {

@@ -15,7 +15,7 @@ public class ClientDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private Long id;
+	private Integer id;
 	
 	@NotEmpty(message = "Campo obrigatório")
 	@Length(min = 5, max = 80, message = "Você deve preencher esse campo de 5 à 80 caracteres")
@@ -34,11 +34,11 @@ public class ClientDTO implements Serializable {
 		email = entity.getEmail();
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
